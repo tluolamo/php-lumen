@@ -56,7 +56,7 @@ class UserController extends Controller
     {
 
         User::findOrFail(Auth::user()['id'])->delete();
-        return response('Deleted Successfully', 200);
+        return response(['message' => 'Deleted'], 200);
     }
 
     // /**
