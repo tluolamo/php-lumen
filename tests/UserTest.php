@@ -43,7 +43,6 @@ class UserTest extends TestCase
         ]);
     }
 
-
     public function testDeleteUser()
     {
         $user = factory(User::class)->create();

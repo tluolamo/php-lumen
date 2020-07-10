@@ -22,7 +22,7 @@ class AuthTest extends TestCase
           'password_confirmation' => 'unittest'
         ];
         $this->json('POST', '/register', $data)->seeJson([
-          'message' => 'CREATED',
+          'email' => $data['email'],
         ]);
 
     }

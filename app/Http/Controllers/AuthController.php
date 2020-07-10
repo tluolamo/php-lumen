@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use  App\User;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -32,7 +32,7 @@ class AuthController extends Controller
             $user->save();
 
             //return successful response
-            return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
+            return response()->json($user, 201);
 
         } catch (\Exception $e) {
             //return error message
