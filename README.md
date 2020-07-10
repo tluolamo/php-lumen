@@ -2,7 +2,7 @@
 
 ## Basic API Usage
 
-### Register:
+### Register
 ```bash
 curl --location --request POST 'localhost:8000/api/register' \
 --header 'Content-Type: application/json' \
@@ -12,7 +12,7 @@ curl --location --request POST 'localhost:8000/api/register' \
     "password_confirmation": "secret"
 }'
 ```
-### Login:
+### Login
 ```bash
 curl --location --request POST 'localhost:8000/login' \
 --header 'Content-Type: application/json' \
