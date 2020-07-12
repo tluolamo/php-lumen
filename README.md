@@ -88,3 +88,29 @@ curl --location --request PUT 'localhost:8000/user' \
 curl --location --request DELETE 'localhost:8000/user' \
 --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTU5NDM5NTAyNSwiZXhwIjoxNTk0Mzk4NjI1LCJuYmYiOjE1OTQzOTUwMjUsImp0aSI6Ik50ZFdhcFkxWjBHb1dJdTQiLCJzdWIiOjIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.wsDJpudmnrDO5Zc6ms7QKSCVWWDfCtdQNCk3J-FUkF4'
 ```
+
+## Development environment
+
+### Install
+```bash
+cp .env.example .env
+```
+Make any adjustments to the .env settings you need then run the below. It will also run unit tests which should pass if everything is good.
+```bash
+./install.sh
+```
+
+### Run
+```bash
+docker-compose up --build -d
+```
+
+### Shutdown
+```bash
+docker-compose down
+```
+
+### Run tests
+```bash
+docker-compose run -w /var/www/html php vendor/bin/phpunit
+```
