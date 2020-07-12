@@ -33,7 +33,7 @@ This system uses event service for all communications between the services. All 
 
 ## Service Tech Specifications
 
-- [User Profile Service](TechSpecProfile.md)
+- [User Profile Service](TechSpecUser.md)
 - [Event Service](TechSpecEvent.md)
 - [Product Service](TechSpecProduct.md)
 - [Shopping Cart Service](TechSpecShoppingCart.md)
@@ -43,7 +43,7 @@ This system uses event service for all communications between the services. All 
 - [UI Service](TechSpecUI.md)
 - [Fulfillment Service](TechSpecFulfillment.md)
 - [Address Standardization Service](TechSpecAddress.md)
-- [Order Service](TechSpecOrders.md)
+- [Order Service](TechSpecOrder.md)
 
 
 ## Basic API Usage
