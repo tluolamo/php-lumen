@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
 
 $router->group([], function () use ($router) {
     // Matches "/api/register
-   $router->post('register', 'AuthController@register');
+   $router->post('new_account', 'AuthController@register');
      // Matches "/api/login
     $router->post('login', 'AuthController@login');
 

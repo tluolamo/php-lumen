@@ -1,5 +1,52 @@
 # README
 
+## Roadmap and Releases
+
+Project will be setup to do releases after each sprint with completed services and features.
+
+|Sprint/Release|Features/Services|
+|---|---|
+|Pre-launch release #1  |User Profile service             <br>Eventing service|
+|Pre-launch release #2  |Communications Service           <br>UI for User Profile Service|
+|Pre-launch release #3  |Product Service                  <br>Shopping Cart Service|
+|Pre-launch release #4  |Shipping Service                 <br>UI for Product Service|
+|Pre-launch release #5  |Payment Service                  <br>UI for Shopping Cart Service|
+|Pre-launch release #6  |Order Service                    <br>UI for Shipping Service|
+|Pre-launch release #7  |Fulfillment service              <br>UI for Payment Service|
+|Pre-launch release #8  |Address Standardization Service  <br>UI for Order Service|
+|Initial Launch Release |UI for Address Standardization Service|
+
+## KPIs
+|KPI|Formula|
+|---|---|
+|Conversion Rate|(No. of Conversions / No. of Leads) * 100|
+|Shopping cart abandonment rate|(1 - (No. of Completed Transactions / No. of Shopping Carts Created)) * 100|
+|Cost of customer acquisition|Amount of Money Spent to Acquire Customers / No. of Customers Acquired|
+|Customer lifetime value|Average order value * Average number of times a customer buys per year * Average customer retention time in months or years|
+|Average order value|Total Revenue / Total No. of Orders|
+|Total Profit|Revenue - Cost|
+|Gross profit margin|Profit / Revenue * 100|
+
+## High Level Overview of the Microservice Architecture
+This system uses event service for all communications between the services. All services emit events as they occur and all services listen to the events that they care about and act on those.
+
+![High level overview of the microservice architecture diagram](./high-level-microservices.svg)
+
+## Service Tech Specifications
+
+- [User Profile Service](TechSpecProfile.md)
+- [Event Service](TechSpecEvent.md)
+- [Product Service](TechSpecProduct.md)
+- [Shopping Cart Service](TechSpecShoppingCart.md)
+- [Shipping Service](TechSpecShipping.md)
+- [Payment Service](TechSpecPayment.md)
+- [Communication Service](TechSpecCommunication.md)
+- [UI Service](TechSpecUI.md)
+- [Fulfillment Service](TechSpecFulfillment.md)
+- [Address Standardization Service](TechSpecAddress.md)
+- [Order Service](TechSpecOrders.md)
+
+
 ## Basic API Usage
 
 ### Register

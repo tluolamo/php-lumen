@@ -1,0 +1,979 @@
+openapi: 3.0.0
+info:
+  version: "2.0.1"
+  description: |
+    This is a Amazon like store server.
+  title: Amazon Like Store
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/tuukkaluolamo/eCommerce/2.0.1
+tags:
+  - name: Developer
+    description: Developer accessible API
+  - name: Admin
+    description: Internally accessible API
+paths:
+  /product:
+    post:
+      tags:
+        - Admin
+      summary: Add a new product to the store
+      operationId: addProduct
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '405':
+          description: Invalid input
+      security:
+        - store_auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPost'
+        description: Product object that needs to be added to the store
+        required: true
+  /product/list:
+    get:
+      tags:
+        - Developer
+      summary: Finds Products
+      description: Filter options can be provided on the query string
+      operationId: findProduct
+      parameters:
+        - name: name
+          in: query
+          description: Value that needs to be considered for filter
+          required: false
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: Value that needs to be considered for filter
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+      security:
+        - store_auth: []
+  '/product/{product_id}':
+    parameters:
+      - name: product_id
+        in: path
+        description: ID of product that needs to be updated
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      tags:
+        - Developer
+      summary: Find product by ID
+      description: Returns a single product
+      operationId: getProductById
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Admin
+      summary: Update product in the store
+      operationId: updateProduct
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - store_auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPost'
+    delete:
+      tags:
+        - Admin
+      summary: Deletes a product
+      operationId: deleteProduct
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - store_auth: []
+  '/product/{product_id}/upload_image':
+    parameters:
+      - name: product_id
+        in: path
+        description: ID of product
+        required: true
+        schema:
+          type: integer
+          format: int64
+    post:
+      tags:
+        - Admin
+      summary: uploads an image
+      operationId: uploadProductImage
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+      security:
+        - store_auth: []
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+  '/image/{image_id}':
+    parameters:
+      - name: image_id
+        in: path
+        description: ID of image
+        required: true
+        schema:
+          type: integer
+          format: int64
+    put:
+      tags:
+        - Admin
+      summary: Update image meta data
+      operationId: updateImage
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+      security:
+        - store_auth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImagePost'
+    delete:
+      tags:
+        - Admin
+      summary: Update image meta data
+      operationId: deleteImage
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+      security:
+        - store_auth: []
+    get:
+      tags:
+        - Admin
+      summary: Get image
+      operationId: getImage
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+      security:
+        - store_auth: []
+
+  /order:
+    post:
+      tags:
+        - Developer
+      summary: Place an order for a product
+      operationId: placeOrder
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        description: order placed for purchasing the products
+        required: true
+
+  '/cart/{cart_id}':
+    parameters:
+      - name: cart_id
+        in: path
+        description: ID of cart item that needs to be fetched, must be the owner of the record or admin rights
+        required: true
+        schema:
+          type: integer
+          format: int64
+          minimum: 1
+    get:
+      tags:
+        - Developer
+      summary: Find cart item by ID
+      description: Your cart id
+      operationId: getCartById
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItems'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - Developer
+      summary: Delete cart item by ID
+      description: Need valid cart item ID
+      operationId: deleteCartItem
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItems'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Developer
+      summary: Update cart item by ID
+      description: Need valid cart item id ID
+      operationId: updateCartItem
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItems'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/order/{order_id}':
+    parameters:
+      - name: order_id
+        in: path
+        description: ID of order that needs to be fetched, must be the owner of the order record or admin rights
+        required: true
+        schema:
+          type: integer
+          format: int64
+          minimum: 1
+    get:
+      tags:
+        - Developer
+      summary: Find purchase order by ID
+      description: Your order id
+      operationId: getOrderById
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - Admin
+      summary: Delete purchase order by ID
+      description: Need valid order ID
+      operationId: deleteOrder
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Admin
+      summary: Update purchase order by ID
+      description: Need valid order ID
+      operationId: updateOrder
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /new_account:
+    post:
+      tags:
+        - Developer
+      summary: Create new user
+      description: New user registration.
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '200':
+          description: Returns the registered user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /login:
+    post:
+      tags:
+        - Developer
+      summary: Logs user into the system
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Retuns JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '400':
+          description: Invalid username/password supplied
+  '/user':
+    get:
+      tags:
+        - Developer
+      summary: Get user by user ID, user id is found in the JWT token
+      operationId: getUserByID
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Developer
+      summary: Update user
+      description: This can only be done by the logged in user. User id is found in the JWT token
+      operationId: updateUser
+      responses:
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Updated user object
+        required: true
+    delete:
+      tags:
+        - Developer
+      summary: Delete user
+      description: This can only be done by the logged in user. User id is found in the JWT token
+      operationId: deleteUser
+      responses:
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/user/address':
+    post:
+      tags:
+        - Developer
+      summary: Create new address
+      description: Add new address to user record
+      operationId: createAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressPost'
+      security:
+        - store_auth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+  '/user/address/{address_id}':
+    parameters:
+      - name: address_id
+        in: path
+        description: ID of address that is in question, must be the owner of the address record or admin rights
+        required: true
+        schema:
+          type: integer
+          format: int64
+          minimum: 1
+    get:
+      tags:
+        - Developer
+      summary: Get address
+      description: Get address record
+      operationId: getAddress
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - store_auth: []
+    put:
+      tags:
+        - Developer
+      summary: Update address
+      description: Update address record
+      operationId: updateAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressPost'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - store_auth: []
+    delete:
+      tags:
+        - Developer
+      summary: Delete address
+      description: Delete address record
+      operationId: deleteAddress
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - store_auth: []
+
+  '/user/cart':
+    parameters:
+      - name: address_id
+        in: path
+        description: ID of address that is in question, must be the owner of the address record or admin rights
+        required: true
+        schema:
+          type: integer
+          format: int64
+          minimum: 1
+    get:
+      tags:
+        - Developer
+      summary: Get cart
+      description: Get all items in users shopping cart
+      operationId: getCartItems
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItems'
+        '400':
+          $ref: '#/components/responses/InvalidID'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - store_auth: []
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        email:
+          type: string
+          example: email@email.com
+        name:
+          type: string
+          example: John Doe
+        created_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        updated_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+    Register:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@nowhere.com
+        password:
+          type: string
+          example: secret
+        password_confirmation:
+          type: string
+          example: secret
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          example: email@email.com
+        password:
+          type: string
+          example: secret
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          format: int32
+          example: 3600
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        product_id:
+          type: integer
+          format: int64
+          example: 1
+        quantity:
+          type: integer
+          format: int32
+          example: 1
+        purchase_time:
+          type: string
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        fulfillment_time:
+          type: string
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        ship_time:
+          type: string
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        status:
+          type: string
+          description: Order Status
+          enum:
+            - placed
+            - fulfilled
+            - shipped
+        shipping_cost:
+            type: number
+            format: double
+            example: 5.00
+        item_cost:
+            type: number
+            format: double
+            example: 109.99
+        tax:
+            type: number
+            format: double
+            example: 10.00
+        discount:
+            type: number
+            format: double
+            example: 10.00
+        total:
+            type: number
+            format: double
+            example: 104.99
+        address:
+          $ref: '#/components/schemas/Address'
+        created_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        updated_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        user_id:
+          type: integer
+          format: int64
+          example: 1
+        address1:
+          type: string
+          example: 12345 Main St
+        address2:
+          type: string
+          example: Apt 1
+        city:
+          type: string
+          example: Los Angeles
+        state:
+          type: string
+          example: CA
+        postal_code:
+          type: string
+          example: 90000
+        country:
+          type: string
+          example: USA
+        primary:
+          type: boolean
+          example: true
+        created_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        updated_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+    AddressPost:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: int64
+          example: 1
+        address1:
+          type: string
+          example: 12345 Main St
+        address2:
+          type: string
+          example: Apt 1
+        city:
+          type: string
+          example: Los Angeles
+        state:
+          type: string
+          example: CA
+        postal_code:
+          type: string
+          example: 90000
+        country:
+          type: string
+          example: USA
+        primary:
+          type: boolean
+          example: true
+        created_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        updated_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+    Product:
+      type: object
+      required:
+        - name
+        - description
+        - photo_urls
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Widget
+        description:
+          type: string
+          example: Awesome Product
+        photo_urls:
+          type: array
+          items:
+            type: string
+            example: https://picsum.photos/200
+        price:
+          type: number
+          format: double
+          example: 12.99
+        dimensions_x:
+          type: number
+          format: double
+          example: 2.0
+        dimensions_y:
+          type: number
+          format: double
+          example: 2.0
+        dimensions_z:
+          type: number
+          format: double
+          example: 2.0
+        status:
+          type: string
+          description: product status in the store
+          enum:
+            - Sold Out
+            - Available
+            - Back Order
+            - Disabled
+        created_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        updated_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+    ProductPost:
+      type: object
+      required:
+        - name
+        - description
+        - photo_urls
+      properties:
+        name:
+          type: string
+          example: Widget
+        description:
+          type: string
+          example: Awesome Product
+        price:
+          type: number
+          format: double
+          example: 12.99
+        dimensions_x:
+          type: number
+          format: double
+          example: 2.0
+        dimensions_y:
+          type: number
+          format: double
+          example: 2.0
+        dimensions_z:
+          type: number
+          format: double
+          example: 2.0
+        status:
+          type: string
+          description: product status in the store
+          enum:
+            - Sold Out
+            - Available
+            - Back Order
+            - Disabled
+    ProductImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        product_id:
+          type: integer
+          format: int64
+          example: 1
+        alt_text:
+          type: string
+          example: Awesome product image
+        url:
+          type: string
+          example: https://picsum.photos/200
+        order:
+          type: integer
+          format: int32
+          example: 1
+        type:
+          type: string
+          enum:
+            - Image
+            - Video
+        created_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        updated_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+    ImagePost:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          format: int64
+          example: 1
+        alt_text:
+          type: string
+          example: Awesome product image
+        url:
+          type: string
+          example: https://picsum.photos/200
+        order:
+          type: integer
+          format: int32
+          example: 1
+        type:
+          type: string
+          enum:
+            - Image
+            - Video
+    CartItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        user_id:
+          type: integer
+          format: int64
+          example: 1
+        product_id:
+          type: integer
+          format: int64
+          example: 1
+        quantity:
+          type: integer
+          format: int64
+          example: 1
+        created_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+        updated_at:
+          format: date-time
+          example: '2020-07-11T23:28:16.840Z'
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+  securitySchemes:
+    store_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidID:
+      description: Invalid ID supplied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

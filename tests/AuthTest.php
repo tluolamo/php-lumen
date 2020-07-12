@@ -21,7 +21,7 @@ class AuthTest extends TestCase
           'password' => 'unittest',
           'password_confirmation' => 'unittest'
         ];
-        $this->json('POST', '/register', $data)->seeJson([
+        $this->json('POST', '/new_account', $data)->seeJson([
           'email' => $data['email'],
         ]);
 
@@ -38,7 +38,7 @@ class AuthTest extends TestCase
         ];
 
         //trying with existing data fails
-        $this->json('POST', '/register', $data)->seeJsonEquals([
+        $this->json('POST', '/new_account', $data)->seeJsonEquals([
           'email' => ['The email has already been taken.'],
         ]);
     }
