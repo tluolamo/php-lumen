@@ -13,7 +13,7 @@ Service which tracks a completed user transaction or order from the point user c
 - Any other sorts or filtering outside of most recent.
 
 ## Plan
-Use Lumen API backed with PostgreSQL where we store the order object with all the details of each item purchased, shipping address, total charges, Charge object id from Stripe and current status.
+Use Lumen API backed with MySQL where we store the order object with all the details of each item purchased, shipping address, total charges, Charge object id from Stripe and current status.
 This service needs to talk directly to the shipping API to get the exact shipping charges as well as the product service to get the product prices and finally tot he payment service to charge the user for the total price calculated.
 ![High level overview of the microservice architecture diagram](./high-level-microservices.svg)
 

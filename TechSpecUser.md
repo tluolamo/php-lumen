@@ -17,7 +17,7 @@ Need ability for user to authenticate so they can purchase items from our site. 
 - Any sort of multi account sharing of information.
 
 ## Plan
-Create PHP Lumen based API backed by PostgreSQL DB and AWS S3 for image file storage.
+Create PHP Lumen based API backed by MySQL DB and AWS S3 for image file storage.
 ![High level overview of the microservice architecture diagram](./high-level-microservices.svg)
 
 ## Security, Privacy, Risks

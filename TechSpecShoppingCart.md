@@ -14,7 +14,7 @@ Need ability to store items user has placed in their cart.
 - Saving items for later
 
 ## Plan
-Create PHP Lumen based API backed by PostgreSQL DB
+Create PHP Lumen based API backed by MySQL DB
 ![High level overview of the microservice architecture diagram](./high-level-microservices.svg)
 
 ## Security, Privacy, Risks

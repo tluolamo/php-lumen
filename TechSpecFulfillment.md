@@ -13,7 +13,7 @@ Need ability to track fulfilment of the order.
 - Support more than one 3rd party warehouse system for the time being.
 
 ## Plan
-Create serverless AWS Lambda based Go service backed by PostgreSQL DB which accept data in the 3rd party format and translate it to our event format. Listen to order events in the Event service to push fulfillment requests to the warehouse.
+Create serverless AWS Lambda based Go service backed by MySQL DB which accept data in the 3rd party format and translate it to our event format. Listen to order events in the Event service to push fulfillment requests to the warehouse.
 ![High level overview of the microservice architecture diagram](./high-level-microservices.svg)
 
 ## Security, Privacy, Risks

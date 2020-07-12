@@ -14,7 +14,7 @@ Need ability to store and search store inventory items.
 - Related or sequenced products
 
 ## Plan
-Create PHP Lumen based API backed by PostgreSQL DB and AWS S3 for image and video file storage.
+Create PHP Lumen based API backed by MySQL DB and AWS S3 for image and video file storage.
 ![High level overview of the microservice architecture diagram](./high-level-microservices.svg)
 
 ## Security, Privacy, Risks

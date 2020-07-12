@@ -6,14 +6,13 @@ Project will be setup to do releases after each sprint with completed services a
 
 |Sprint/Release|Features/Services|
 |---|---|
-|Pre-launch release #1  |User Profile service             <br>Eventing service|
-|Pre-launch release #2  |Communications Service           <br>UI for User Profile Service|
-|Pre-launch release #3  |Product Service                  <br>Shopping Cart Service|
-|Pre-launch release #4  |Shipping Service                 <br>UI for Product Service|
-|Pre-launch release #5  |UI for Shipping Service          <br>UI for Shopping Cart Service|
-|Pre-launch release #6  |Order Service                    <br>UI for Payment Service|
-|Pre-launch release #7  |Address Standardization Service  <br>UI for Order Service|
-|Initial Launch Release |Fulfillment service              <br>UI for Address Standardization Service|
+|Pre-launch release #1  |User Profile service     <br>Eventing service|
+|Pre-launch release #2  |Communications Service   <br>UI for User Profile Service|
+|Pre-launch release #3  |Product Service          <br>Shopping Cart Service|
+|Pre-launch release #4  |Shipping Service         <br>UI for Product Service|
+|Pre-launch release #5  |UI for Shipping Service  <br>UI for Shopping Cart Service|
+|Pre-launch release #6  |Order Service            <br>UI for Payment Service|
+|Initial Launch Release |Fulfillment service      <br>UI for Order Service|
 
 ## KPIs
 |KPI|Formula|
@@ -42,7 +41,6 @@ This system uses event service for all communications between the services. All 
 - [Communication Service](TechSpecCommunication.md)
 - [UI Service](TechSpecUI.md)
 - [Fulfillment Service](TechSpecFulfillment.md)
-- [Address Standardization Service](TechSpecAddress.md)
 - [Order Service](TechSpecOrder.md)
 
 
