@@ -88,8 +88,12 @@ curl --location --request DELETE 'localhost:8000/user' \
 ```
 
 ## Development environment
+If you get permissions errors with these shell commands you may need to run them as sudo
 
 ### Install
+You need to have [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed and working first. Refer to their documentation for how to install them on your local machine. The execute the below commands.
+
+First create .env file
 ```bash
 cp .env.example .env
 ```
@@ -111,4 +115,10 @@ docker-compose down
 ### Run tests
 ```bash
 docker-compose run -w /var/www/html php vendor/bin/phpunit
+```
+
+### Notes
+You may need to alter some directory permissions to allow user `www-data` to write to them, namely `storage/logs` the install script will attempt this, but worst case you can always connect to the instance with the below command do whatever needs to be done manually.
+```bash
+docker-compose exec php sh
 ```
