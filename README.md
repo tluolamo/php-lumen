@@ -91,7 +91,7 @@ curl --location --request DELETE 'localhost:8000/user' \
 If you get permissions errors with these shell commands you may need to run them as sudo
 
 ### Install
-You need to have [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed and working first. Refer to their documentation for how to install them on your local machine. The execute the below commands.
+You need to have [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed and working first. Refer to their documentation for how to install them on your local machine. Then execute the below commands.
 
 First create .env file
 ```bash
